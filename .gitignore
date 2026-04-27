@@ -1,0 +1,17 @@
+# Data
+data/raw/
+data/processed/
+
+# Outputs
+outputs/checkpoints/
+outputs/metrics/
+outputs/figures/
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Environment
+skin_cancer_env/
+.venv/

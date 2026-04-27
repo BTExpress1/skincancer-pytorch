@@ -1,18 +1,18 @@
 # src/dataset.py
 
-import os
 from PIL import Image
 from torch.utils.data import Dataset
+from pathlib import Path
 import torchvision.transforms as transforms
-
 from src.config import IMAGE_SIZE
 
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 class SkinCancerDataset(Dataset):
-    def __init__(self, df, img_dir, transform=None, sample_frac=1.0):
+    def __init__(self, df, transform=None, sample_frac=1.0, image_path_col="path"):
         self.df = df.sample(frac=sample_frac, random_state=42).reset_index(drop=True)
-        self.img_dir = img_dir
         self.transform = transform
+        self.image_path_col = image_path_col
 
         self.label_map = {
             "akiec": 0,
@@ -30,9 +30,7 @@ class SkinCancerDataset(Dataset):
     def __getitem__(self, idx):
         row = self.df.iloc[idx]
 
-        img_path = os.path.join(self.img_dir, row["image_id"] + ".jpg")
-        image = Image.open(img_path).convert("RGB")
-
+        image = Image.open(PROJECT_ROOT / row[self.image_path_col]).convert("RGB")
         label = self.label_map[row["dx"]]
 
         if self.transform:
