@@ -6,11 +6,21 @@ from torchvision import models
 from src.config import NUM_CLASSES
 
 
-def build_model():
+def build_model(unfreeze_backbone=False):
     model = models.mobilenet_v3_small(weights=models.MobileNet_V3_Small_Weights.DEFAULT)
 
-    in_features = model.classifier[-1].in_features
+    # Freeze backbone by default
+    for param in model.features.parameters():
+        param.requires_grad = False
 
-    model.classifier[-1] = nn.Linear(in_features, NUM_CLASSES)
+    in_features = model.classifier[-1].in_features
+    model.classifier[-1] = nn.Sequential(
+        nn.Dropout(p=0.3),
+        nn.Linear(in_features, NUM_CLASSES)
+    )
+
+    if unfreeze_backbone:
+        for param in model.features.parameters():
+            param.requires_grad = True
 
     return model

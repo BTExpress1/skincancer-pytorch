@@ -1,17 +1,24 @@
 # Data
-data/raw/
-data/processed/
+data/
+*.csv
+*.json
 
 # Outputs
-outputs/checkpoints/
-outputs/metrics/
-outputs/figures/
+outputs/
+*.pt
+*.pth
 
 # Python
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
 
+
 # Environment
 skin_cancer_env/
 .venv/
+env/
+
+# OS
+.DS_Store
+Thumbs.db
