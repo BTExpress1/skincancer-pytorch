@@ -7,12 +7,12 @@ DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 # Data
 IMAGE_SIZE = 160
-BATCH_SIZE = 16
-NUM_WORKERS = 2
+BATCH_SIZE = 64
+NUM_WORKERS = 8
 
 # Training
-EPOCHS = 2
-LEARNING_RATE = 1e-3
+#EPOCHS = 2
+# LEARNING_RATE = 1e-3
 
 # Dataset
 NUM_CLASSES = 7
