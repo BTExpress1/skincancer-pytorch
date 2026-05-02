@@ -14,7 +14,7 @@ NUM_CLASSES = 7
 CLASS_NAMES = ["akiec", "bcc", "bkl", "df", "mel", "nv", "vasc"]
 
 # Training
-EPOCHS = 20
+EPOCHS = 35
 UNFREEZE_EPOCH = 7
 LEARNING_RATE = 1e-4
 RANDOM_SEED = 123
