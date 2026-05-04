@@ -12,10 +12,13 @@
 #   - Cron runs this script every 1–5 minutes
 #
 
+echo "$(date) [HEARTBEAT] Cron fired" >> /var/log/idle_shutdown.log
+
+
 ### --- CONFIGURATION -------------------------------------------------------
 
 # Idle threshold in minutes before shutdown
-IDLE_THRESHOLD=5
+IDLE_THRESHOLD=10
 
 # Log file
 LOG_FILE="/var/log/idle_shutdown.log"
@@ -73,10 +76,12 @@ if (( IDLE_MINUTES >= IDLE_THRESHOLD )); then
 
     # GraphQL mutation to stop the Pod
     curl -s -X POST "https://api.runpod.io/graphql" \
-        -H "Content-Type: application/json" \
-        -H "Authorization: Bearer ${RUNPOD_API_KEY}" \
-        -d "{\"query\":\"mutation { podStop(input: { podId: \\\"${RUNPOD_POD_ID}\\\" }) }\"}" \
-        >> "$LOG_FILE" 2>&1
+       -H "Content-Type: application/json" \
+       -H "Authorization: Bearer ${RUNPOD_API_KEY}" \
+       -d "{
+           \"query\": \"mutation { podStop(input: { podId: \\\"${RUNPOD_POD_ID}\\\" }) { id desiredStatus } }\"
+       }" >> "$LOG_FILE" 2>&1
+
 
     echo "$(date) [DONE] Pod stop request sent." >> "$LOG_FILE"
 
