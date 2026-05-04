@@ -18,7 +18,7 @@ echo "$(date) [HEARTBEAT] Cron fired" >> /var/log/idle_shutdown.log
 ### --- CONFIGURATION -------------------------------------------------------
 
 # Idle threshold in minutes before shutdown
-IDLE_THRESHOLD=10
+IDLE_THRESHOLD=30
 
 # Log file
 LOG_FILE="/var/log/idle_shutdown.log"
