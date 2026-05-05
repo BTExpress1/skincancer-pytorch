@@ -20,6 +20,13 @@ echo "$(date) [HEARTBEAT] Cron fired" >> /var/log/idle_shutdown.log
 # Idle threshold in minutes before shutdown
 IDLE_THRESHOLD=30
 
+### --- KEEP ALIVE CHECK ---------------------------------------------------
+if [[ -f /tmp/keep_alive ]]; then
+    echo "$(date) [INFO] Keep alive flag set, skipping idle check" >> "$LOG_FILE"
+    exit 0
+fi
+
+
 # Log file
 LOG_FILE="/var/log/idle_shutdown.log"
 
